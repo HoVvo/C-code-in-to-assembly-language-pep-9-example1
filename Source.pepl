@@ -1,0 +1,132 @@
+-------------------------------------------------------------------------------
+      Object
+Addr  code   Symbol   Mnemon  Operand     Comment
+-------------------------------------------------------------------------------
+0000  12003E          BR      main        
+             w:       .EQUATE 2           ;formal parameter
+             Weight:  .EQUATE 0           
+
+0003  C30002 void_c:  LDWA    w,s         
+0006  14003A          BRLE    else        ;if(w<=0) go to label else
+0009  A00001          CPWA    1,i         ;if (0<w and w<=1)
+000C  1E0013          BRGT    elseif      ;otherwise goto label elseif
+000F  490081          STRO    Out1,d      ;then print message Out1
+0012  01              RET                 ;return to main program
+
+0013  C30002 elseif:  LDWA    w,s         
+0016  A00003          CPWA    3,i         ;else if (1 < w and w <= 3)
+0019  1E0020          BRGT    elseif1     ;otherwise goto label elseif1
+001C  49009D          STRO    Out2,d      ;then print message Out2
+001F  01              RET                 ;return to main program
+
+0020  C30002 elseif1: LDWA    w,s         
+0023  A0000A          CPWA    10,i        ;else if (3 < Weight and Weight <= 10)
+0026  1E002D          BRGT    elseif2     ;otherwise goto label elseif2
+0029  4900B9          STRO    Out3,d      ;then print message Out3
+002C  01              RET                 ;return to main program
+
+002D  C30002 elseif2: LDWA    w,s         
+0030  A00014          CPWA    20,i        ;else if (10 < Weight && Weight <= 20)
+0033  1E003A          BRGT    else        ;otherwise goto label else
+0036  4900D5          STRO    Out4,d      ;then print message Out4
+0039  01              RET                 ;return to main program
+
+003A  4900F2 else:    STRO    Out5,d      ;then print message Out5
+003D  01              RET                 ;return to main program
+
+003E  490057 main:    STRO    InputMsg,d  ;printf message for input number
+0041  330000          DECI    Weight,s    ;scanf(Weight)
+0044  3B0000          DECO    Weight,s    
+0047  C30000          LDWA    Weight,s    ;move num
+004A  E3FFFC          STWA    -4,s        
+004D  580004          SUBSP   4,i         ;push parameter
+0050  240003          CALL    void_c      ;c(Weight)
+0053  500004          ADDSP   4,i         ;reset stack pointer
+0056  00              STOP                
+0057  506C65 InputMsg:.ASCII  "Please enter the weight of the package:  \x00"
+      617365 
+      20656E 
+      746572 
+      207468 
+      652077 
+      656967 
+      687420 
+      6F6620 
+      746865 
+      207061 
+      636B61 
+      67653A 
+      202000 
+
+0081  0A5468 Out1:    .ASCII  "\nThe shipping cost is $3.5 \x00"
+      652073 
+      686970 
+      70696E 
+      672063 
+      6F7374 
+      206973 
+      202433 
+      2E3520 
+      00     
+
+009D  0A5468 Out2:    .ASCII  "\nThe shipping cost is $5.5 \x00"
+      652073 
+      686970 
+      70696E 
+      672063 
+      6F7374 
+      206973 
+      202435 
+      2E3520 
+      00     
+
+00B9  0A5468 Out3:    .ASCII  "\nThe shipping cost is $8.5 \x00"
+      652073 
+      686970 
+      70696E 
+      672063 
+      6F7374 
+      206973 
+      202438 
+      2E3520 
+      00     
+
+00D5  0A5468 Out4:    .ASCII  "\nThe shipping cost is $10.5 \x00"
+      652073 
+      686970 
+      70696E 
+      672063 
+      6F7374 
+      206973 
+      202431 
+      302E35 
+      2000   
+
+00F2  0A5468 Out5:    .ASCII  "\nThe package cannot be shipped. \x00"
+      652070 
+      61636B 
+      616765 
+      206361 
+      6E6E6F 
+      742062 
+      652073 
+      686970 
+      706564 
+      2E2000 
+
+0113                  .END                  
+-------------------------------------------------------------------------------
+
+
+Symbol table
+--------------------------------------
+Symbol    Value        Symbol    Value
+--------------------------------------
+InputMsg  0057         Out1      0081         
+Out2      009D         Out3      00B9         
+Out4      00D5         Out5      00F2         
+Weight    0000         else      003A         
+elseif    0013         elseif1   0020         
+elseif2   002D         main      003E         
+void_c    0003         w         0002         
+--------------------------------------
